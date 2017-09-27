@@ -3,7 +3,7 @@ version: '2.1'
 services:
 
   base:
-    image: dnoliver/upm-base
+    image: dnoliver/upm-base:build-mraa-for-upm
     environment:
       - http_proxy
       - https_proxy
@@ -28,7 +28,7 @@ services:
 
   doc:
     extends: base
-    image: dnoliver/upm-all
+    image: dnoliver/upm-all:build-mraa-for-upm
     environment:
       - BUILDSWIGPYTHON=ON
       - BUILDSWIGJAVA=ON
@@ -59,7 +59,7 @@ services:
 
   sonar-scan:
     extends: base
-    image: dnoliver/upm-all
+    image: dnoliver/upm-all:build-mraa-for-upm
     environment:
       - BUILDSWIGPYTHON=ON
       - BUILDSWIGNODE=ON
@@ -77,36 +77,36 @@ services:
 
   python:
     extends: base
-    image: dnoliver/upm-python
+    image: dnoliver/upm-python:build-mraa-for-upm
     environment:
       - BUILDSWIGPYTHON=ON
     command: bash -c "./scripts/run-cmake.sh && cd build && make -j8 && make -j8 install && ldconfig && ctest --output-on-failure"
 
   java:
     extends: base
-    image: dnoliver/upm-java
+    image: dnoliver/upm-java:build-mraa-for-upm
     environment:
       - BUILDSWIGJAVA=ON
     command: bash -c "./scripts/run-cmake.sh && cd build && make -j8 && make -j8 install && ldconfig && ctest --output-on-failure"
 
   android:
     extends: java
-    image: dnoliver/upm-android
+    image: dnoliver/upm-android:build-mraa-for-upm
     environment:
       - BUILDTESTS=OFF
     command: bash -c "./scripts/build-android.sh"
 
   node4:
     extends: base
-    image: dnoliver/upm-node4
+    image: dnoliver/upm-node4:build-mraa-for-upm
     environment:
       - BUILDSWIGNODE=ON
     command: bash -c "./scripts/run-cmake.sh && cd build && make -j8 && make -j8 install && ldconfig && ctest --output-on-failure -E examplenames_js"
 
   node5:
     extends: node4
-    image: dnoliver/upm-node5
+    image: dnoliver/upm-node5:build-mraa-for-upm
 
   node6:
     extends: node4
-    image: dnoliver/upm-node6
+    image: dnoliver/upm-node6:build-mraa-for-upm
